@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node backend.credere"
+  },
   "dependencies": {
     "express": "^4.18.2"
   }
