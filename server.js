@@ -3,7 +3,7 @@ const app = express();
 //indica para express ler body com json
 app.use(express.json())
 
-app.listen(8081);
+app.listen(process.env.PORT || 8081);
 
 const directions_left = { "E": "B", "D": "C", "C": "E", "B": "D" }
 const directions_right = { "E": "C", "D": "B", "C": "D", "B": "E" }
