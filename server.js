@@ -3,8 +3,6 @@ const app = express();
 //indica para express ler body com json
 app.use(express.json())
 
-app.listen(process.env.PORT || 8081);
-
 const directions_left = { "E": "B", "D": "C", "C": "E", "B": "D" }
 const directions_right = { "E": "C", "D": "B", "C": "D", "B": "E" }
 
@@ -78,3 +76,4 @@ app.get("/reset", function (req, res) {
 
 })
 
+module.exports = app
