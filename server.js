@@ -1,17 +1,11 @@
 const express = require("express");
+const { applyMovement, isInvalidMovements } = require("./movements")
 const app = express();
 //indica para express ler body com json
 app.use(express.json())
 
 const directions_left = { "E": "B", "D": "C", "C": "E", "B": "D" }
 const directions_right = { "E": "C", "D": "B", "C": "D", "B": "E" }
-
-const limits = {
-    max_x: 5,
-    min_x: 0,
-    max_y: 5,
-    min_y: 0
-}
 
 let sonda = {
     x: 0,
@@ -30,7 +24,7 @@ app.post("/move", function (req, res) {
 
     move(movements, clone_sonda)
 
-    if ((clone_sonda.x > limits.max_x || clone_sonda.x < limits.min_x) || (clone_sonda.y > limits.max_y || clone_sonda.y < limits.min_y)) {
+    if (isInvalidMovements()) {
         res.send({ messege: "Ocorreu um erro, você ultrapassou o limite de marte!" })
     } else {
         move(movements, sonda)
@@ -51,13 +45,13 @@ function move(commands, target) {
     commands.forEach(movement => {
         if (movement == "M") {
             if (target.face == "D") {
-                target.x = target.x + 1
+                applyMovement(target, "x", 1)
             } else if (target.face == "C") {
-                target.y = target.y + 1
+                applyMovement(target, "y", 1)
             } else if (target.face == "B") {
-                target.y = target.y - 1
+                applyMovement(target, "y", -1)
             } else {
-                target.x = target.x - 1
+                applyMovement(target, "x", -1)
             }
         } else if (movement == "GE" || movement == "GD") {
             target.face = getDirection(movement, target)
@@ -65,6 +59,7 @@ function move(commands, target) {
 
     });
 }
+
 app.get("/reset", function (req, res) {
     sonda = {
         x: 0,
@@ -76,4 +71,4 @@ app.get("/reset", function (req, res) {
 
 })
 
-module.exports = app
+module.exports = { app, sonda }
