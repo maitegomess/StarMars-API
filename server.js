@@ -1,5 +1,5 @@
 const express = require("express");
-const { applyMovement, isInvalidMovements } = require("./movements")
+const { applyMovement, isInvalidMovements } = require("./engine.js")
 const app = express();
 //indica para express ler body com json
 app.use(express.json())
@@ -24,7 +24,7 @@ app.post("/move", function (req, res) {
 
     move(movements, clone_sonda)
 
-    if (isInvalidMovements()) {
+    if (isInvalidMovements(clone_sonda)) {
         res.send({ messege: "Ocorreu um erro, você ultrapassou o limite de marte!" })
     } else {
         move(movements, sonda)

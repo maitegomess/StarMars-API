@@ -1,4 +1,4 @@
-const { applyMovement, isInvalidMovements } = require("../movements.js")
+const { applyMovement, isInvalidMovements } = require("../engine.js")
 
 it('should apply 1 unit in horizontal negative direction', async () => {
     let target = {
